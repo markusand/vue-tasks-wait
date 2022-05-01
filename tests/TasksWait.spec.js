@@ -33,4 +33,14 @@ describe('TasksWait component', () => {
     await findByRole('status');
     expect(queryByText('task')).toBeNull();
   });
+
+  it('should only display allowed tasks (if defined)', async () => {
+    const props = { task: 'task' };
+    const { findByRole, queryByText } = render(TasksWait, { props });
+    startWait('task');
+    startWait('other');
+    await findByRole('status');
+    expect(queryByText('task')).toBeTruthy();
+    expect(queryByText('other')).toBeNull();
+  });
 });

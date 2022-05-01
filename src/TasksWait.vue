@@ -12,7 +12,8 @@
 </template>
 
 <script>
-import { tasks, isWaiting, isWaitingFor } from './tasks-wait.service';
+import { computed } from 'vue';
+import { tasks as TASKS } from './tasks-wait.service';
 
 export default {
   name: 'TasksWait',
@@ -23,7 +24,12 @@ export default {
     formatter: { type: Function, default: name => name },
   },
   setup(props) {
-    const isVisible = props.task ? isWaitingFor(props.task) : isWaiting;
+    const tasks = computed(() => (props.task
+      ? Object.entries(TASKS).reduce((acc, [name, time]) => {
+        if (name === props.task) acc[name] = time;
+        return acc;
+      }, {}) : TASKS));
+    const isVisible = computed(() => Object.keys(tasks.value).length > 0);
     return { tasks, isVisible };
   },
 };
