@@ -1,7 +1,7 @@
 <template>
   <transition :name="transition">
     <div v-show="isVisible" class="tasks-wait">
-      <slot><div class="spinner" /></slot>
+      <slot><div role="status" class="spinner" /></slot>
       <ul v-if="!silent" class="tasks-wait__tasks">
         <li v-for="(time, name) in tasks" :key="name">
           {{ formatter(name, time) }}
