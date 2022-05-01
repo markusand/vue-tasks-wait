@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { TasksWait, waitTask, startWait, finishWait, isWaitingFor } from '../src';
+import { inject } from 'vue';
 
 const wait = ms => new Promise(resolve => { setTimeout(resolve, ms); });
 
@@ -20,8 +20,9 @@ const dictionary = {
 
 export default {
   name: 'App',
-  components: { TasksWait },
   setup() {
+    const { waitTask, startWait, finishWait, isWaitingFor } = inject('wait');
+
     const triggerTask = waitTask(async () => {
       await wait(5000);
     }, 'task');

@@ -18,7 +18,39 @@ Include basic styles in your project js or (s)css entry point
 import 'vue-tasks-wait/dist/style.css'
 ```
 
-Import TasksWait spinner component and waiting methods
+Install plugin and use injected methods
+
+```js
+/* main.js */
+import { createApp } from 'vue';
+import App from './App.vue';
+import Wait from 'vue-tasks-wait';
+
+const app = createApp(App);
+app.use(Wait);
+app.mount('#app');
+```
+
+```html
+<!-- App.vue -->
+<template>
+  <tasks-wait />
+</template>
+
+<script>
+import { inject } from 'vue';
+
+export default {
+  setup() {
+    const wait = inject('wait');
+    wait.startWait('task');
+    wait.finishWait('task');
+  },
+};
+</script>
+```
+
+or import TasksWait spinner component and waiting methods locally
 
 ```html
 <template>
